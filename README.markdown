@@ -17,6 +17,7 @@ Note: make sure $HOME/.cabal/bin is in your PATH.
 ## Create an app
 
     λ bird hatch StarWars
+      A fresh bird app has been created in StarWars.
 
 ## Compile your app
 
@@ -31,14 +32,12 @@ Note: make sure $HOME/.cabal/bin is in your PATH.
 ## Start your app (runs on port 3000)
 
     λ bird fly
+      A bird was just spotted in flight at http://localhost:3000
 
 ## Try it out
 
     λ curl http://localhost:3000
       Hello, Bird!
-
-    λ curl http://localhost:3000?name=Luke
-      Hello, Luke
 
 ## Improvise!
 
@@ -54,9 +53,10 @@ Note: make sure $HOME/.cabal/bin is in your PATH.
 
     get [] = do
       name <- param "name"
+      log "I'm about to greet a Jedi. Teehee!"
       body $ "Greetings, " ++ (maybe "Jedi!" id name)
 
-now recompile your app and start it flying:
+Now recompile your app and start it flying:
 
     λ bird nest
     λ bird fly &
@@ -86,7 +86,7 @@ now recompile your app and start it flying:
 
 You have four functions to implement: get, post, put, and delete. They each accept a Bird Request.
 
-Inside the function body, you can use the following methods (don't worry, this list will grow):
+Inside the function body, you can use the following methods (don't worry, this is a growing list):
 
     param :: String -> Maybe String
     -- ex: for the request GET /droids?name=c3po,
@@ -106,11 +106,14 @@ Inside the function body, you can use the following methods (don't worry, this l
     -- creates/updates a header
     -- ex: get [] = body "Hello World" >> header "X-Powered-By" "BIRD!"
 
+    log :: String -> BirdResponder ()
+    -- adds to the log
+    -- ex: get [] = body "Hello World" >> log "Why did I just greet the world?"
+
 ## Notes
 
 This project is *still* in its infancy. Coming features:
 
-* logging
 * post/put/delete http param processing
 * helpers for popular html generation solutions (Hamlet, HStringTemplate, HAXML, BlazeHTML, etc.)
 * WAI support
